@@ -12,6 +12,7 @@ export const MovieFetch = () => {
   };
 
   const handleClick = (e) => {
+    e.preventDefault();
     getMovieInfo(movieTitle);
     setMovieTitle("");
 
@@ -33,8 +34,8 @@ export const MovieFetch = () => {
 
   return (
     <>
-      <p>Movie Database</p>
-      <form>
+      <p className="title1">🎥Movie Database🎞️</p>
+      <form className="title1">
         <input
           type="text"
           id="movieTitle"
@@ -42,11 +43,11 @@ export const MovieFetch = () => {
           placeholder="Enter movie title here"
           onChange={handleInputChange}
         />
-        <button type="button" onClick={handleClick}>
+        <button type="submit" onClick={handleClick}>
           Search For Film
         </button>
       </form>
-      <div>
+      <div class="container">
         {movieList
           .slice()
           .reverse()

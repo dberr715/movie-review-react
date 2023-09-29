@@ -29,9 +29,9 @@ export const DisplayArea = ({ movieData }) => {
   return (
     <div class="card">
       <div class="card-image">
-        <figure class="image is-4by3">
+        {/* <figure class="image is-4by3">
           <img id="movie-poster" src={movieData.Poster} alt={movieData.Title} />
-        </figure>
+        </figure> */}
       </div>
       <div class="card-content">
         <div class="media">
@@ -52,8 +52,7 @@ export const DisplayArea = ({ movieData }) => {
           {movieData.Ratings.map((rating, index) => (
             <p key={index}>
               {" "}
-              -------------------------------------- Ratings: {rating.Source},
-              Score: {rating.Value}{" "}
+              Ratings: {rating.Source}, Score: {rating.Value}{" "}
             </p>
           ))}
 
