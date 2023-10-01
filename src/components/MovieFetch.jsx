@@ -1,11 +1,9 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DisplayArea } from "./DisplayArea";
 
 export const MovieFetch = () => {
   const [movieTitle, setMovieTitle] = useState("");
-  const [movieData, setMovieData] = useState("");
   const [movieList, setMovieList] = useState([]);
-  //   const [urlTitle, setUrlTitle] = useState("");
 
   const handleInputChange = (e) => {
     setMovieTitle(e.target.value);
@@ -15,19 +13,26 @@ export const MovieFetch = () => {
     e.preventDefault();
     getMovieInfo(movieTitle);
     setMovieTitle("");
-
-    // setMovieTitle("");
   };
 
-  const getMovieInfo = () => {
-    // const apiUrl = `http://www.omdbapi.com/?t=fletch&apikey=4a35b7a3`;
+  const handleSecondClick = (review) => {
+    if (currentMovieIndex !== null) {
+      const updatedMovieList = [...movieList];
+      updatedMovieList[currentMovieIndex].personalReview = review;
+      setMovieList(updatedMovieList);
+    }
+  };
+
+
+
+  const getMovieInfo = (movieTitle) => {
     const apiUrl = `http://www.omdbapi.com/?t=${movieTitle}&apikey=4a35b7a3`;
 
     const getInfo = async () => {
       const response = await fetch(apiUrl);
       const data = await response.json();
-      setMovieData(data);
-      setMovieList([...movieList, data]);
+      data.personalReview = ""; // Initialize personalReview property
+      setMovieList((prevList) => [...prevList, data]);
     };
     getInfo();
   };
@@ -47,12 +52,16 @@ export const MovieFetch = () => {
           Search For Film
         </button>
       </form>
-      <div class="container">
+      <div className="container">
         {movieList
           .slice()
           .reverse()
           .map((movieData, index) => (
-            <DisplayArea key={index} movieData={movieData} />
+            <DisplayArea
+              key={index}
+              movieData={movieData}
+              handleSecondClick={(e) => handleSecondClick(e, index)}
+            />
           ))}
       </div>
     </>
